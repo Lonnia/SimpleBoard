@@ -5,25 +5,32 @@ $password = "/*your database password*/";
 
 // Create connection
 $conn = mysql_connect($servername, $username, $password);
-mysql_select_db('/*your database name*/', $conn);
+
+// Select database
+mysql_select_db('lonnia', $conn);
 
 // Check connection
 if (!$conn) {
     die("Connection failed: " . mysql_error() );
 } 
 
-
+// if there is post data
 if($_POST['uploader'] && $_POST['contents']){
+
+    // initialize new variables stored POST data
     $uploader = $_POST['uploader'];
     $contents = $_POST['contents'];
+
+    // check datetime and initialize a new variable stored datetime
     $uptime = date('Y-m-d H:i:s');
 
-
+    // store a query in a new variable
     $sql = "insert into board (uploader, contents, uptime) values (\"$uploader\", \"$contents\", \"$uptime\" )";
     
-    // 쿼리문 작성/적용
+    // run a query based on an information of a connection
     mysql_query($sql, $conn);
-    // 디비 닫기
+
+    // close a database
     mysql_close($conn);
 }
 ?>
@@ -57,9 +64,14 @@ if($_POST['uploader'] && $_POST['contents']){
         <td style="padding:5px 5px 5px 5px;">Uploaded Time</td>
     </tr>
     <?
+
+    // select all data from board(table of database) based on an information of a connection
     $sql = mysql_query("SELECT * FROM board", $conn);
-    //fetch tha data from the database
+
+    // fetch tha data from the database
     while ($result = mysql_fetch_array($sql)) {
+
+        // if there is no data
         if ($result=='') { ?>
             <tr align="center" valign="middle" style="height:1px;background-color:#CCCCCC;">
                 <td></td>
