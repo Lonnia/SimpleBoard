@@ -7,7 +7,7 @@ $password = "/*your database password*/";
 $conn = mysql_connect($servername, $username, $password);
 
 // Select database
-mysql_select_db('lonnia', $conn);
+mysql_select_db('/*your database name*/', $conn);
 
 // Check connection
 if (!$conn) {
